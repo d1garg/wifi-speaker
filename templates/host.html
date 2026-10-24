@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Host Control</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #eee;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #222;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        button {
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-start { background: #00e676; color: #000; }
+        .btn-stop { background: #ff1744; color: #fff; }
+        button:hover { opacity: 0.85; }
+        #status { margin-top: 20px; font-size: 14px; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>WiFi Speaker Host</h2>
+        <p>Host PC par YouTube / Music chalao aur broadcast shuru karo.</p>
+        <button class="btn-start" onclick="startBroadcast()">Start Streaming</button>
+        <button class="btn-stop" onclick="stopBroadcast()">Stop</button>
+        <p id="status">Status: Idle</p>
+    </div>
+
+    <script>
+        const socket = io();
+
+        function startBroadcast() {
+            socket.emit('start_broadcast');
+            document.getElementById('status').innerText = "Status: Streaming System Audio...";
+            document.getElementById('status').style.color = "#00e676";
+        }
+
+        function stopBroadcast() {
+            socket.emit('stop_broadcast');
+            document.getElementById('status').innerText = "Status: Stopped";
+            document.getElementById('status').style.color = "#ff1744";
+        }
+    </script>
+</body>
+</html>
